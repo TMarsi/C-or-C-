@@ -1,0 +1,46 @@
+#include <stdio.h>
+#include <math.h>
+
+int prime[100001];
+
+int prime1(int n) {
+    if (n <= 1) return 0;
+    int limit = sqrt(n);
+    for (int i = 2; i <= limit; i++) {
+        if (n % i == 0)
+            return 0;
+    }
+    return 1;
+}
+
+
+void loc() {
+    for (int i = 0; i <= 100000; i++)
+        prime[i] = 1; 
+    prime[0] = prime[1] = 0;
+
+    for (int i = 2; i * i <= 100000; i++) {
+        if (prime[i]) {
+            for (int j = i * i; j <= 100000; j += i)
+                prime[j] = 0;
+        }
+    }
+}
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    loc();
+
+    int cnt = 0;
+    int i = 0;
+    while (cnt < n) {
+        if (prime[i]) {
+            printf("%d\n", i);
+            ++cnt;
+        }
+        ++i;
+    }
+    return 0;
+}
